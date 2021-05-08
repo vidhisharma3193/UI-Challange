@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import colors from '../constants/colors';
+import React from 'react';
 
 interface PurgeButtonProps {
   className?: string;
@@ -21,20 +22,54 @@ This button has three defined states:
   - Animations on release of an "active" button is up to you.
 -------------------------------------------------------------- */
 
-const Button = styled.button`
-  background: ${colors.gray.shade300};
-  color: ${colors.gray.shade800};
-  font-family: inherit;
-  font-size: 1.5rem;
-  font-weight: 300;
+let Button = styled.button<{ className?: string}>`
+  border: ${props => props.className === "Idle" ? '10px solid #CBCBCB' : '10px solid #00CBE6'};
+  color: ${colors.cyan.shade500};
+  background: white;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
   height: 15rem;
-  border: 1px solid ${colors.gray.shade400};
   width: 15rem;
+  position: absolute;
+  border-radius: 50%;
+  // border-top: ${props => props.className === "Idle" ? null : '10px solid red'}; testing border color
+  box-sizing: border-box;
+  // transition: ${props => props.className !== "Idle" ? 'all .10s ease-in-out': 'null'};
+  box-shadow: inset -10px -10px 15px rgba(0, 0, 0, 0.15), inset 10px 10px 20px rgba(255, 255, 255, 0.35);
+  // inset -5px -5px 10px rgb(0 0 0 / 7%);
 `;
 
-export const PurgeButton = ({ className = '' }: PurgeButtonProps) => {
+export const PurgeButton = ({ className = 'Idle' }: PurgeButtonProps) => {
+
+  const [buttonState, setButtonState] = React.useState(className);
+
+  // const myTimer = setInterval(() => console.log("Click!"))
+  // const buttonPressed = () => {
+  //   setButtonState(false)
+  //   // console.log(e) 
+  //   // debugger
+  // //   Button = styled(Button)`
+  // //  border: 10px solid #00CBE6`
+
+  // }
+
+  // const buttonRelesed = () => {
+  //   setButtonState(true)
+  // //   Button = styled(Button)`
+  // //  border: 10px solid #CBCBCB`
+  // }
+
+  // console.log(buttonState)
+
   return (
-    <Button>Button Placeholder</Button>
+    <Button 
+    className = {buttonState}
+    onMouseDown={() => setButtonState("Activating")}
+    onMouseUp={() => setButtonState("Idle")}
+    >
+      PURGE
+    </Button>
   );
 };
 
